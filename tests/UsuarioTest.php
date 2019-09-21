@@ -11,11 +11,21 @@ class UsuarioTest extends TestCase {
     /** @test */
     public function testLogar() {
         $usuario = new Usuario();
-
         $this->assertEquals(
             true,
             $usuario->logar('paulo', '123')
         );
+        unset($usuario);
+    }
+
+    /** @test */
+    public function testIncluirUsuario() {
+        $usuario = new Usuario();
+        $this->assertEquals(
+            true,
+            $usuario->incluirUsuario('nainai', 'nainai@gmail.com', 'nainai', '123')
+        );
+        unset($usuario);
     }
 }
 ?>
