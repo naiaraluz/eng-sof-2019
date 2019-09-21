@@ -2,13 +2,13 @@
 
 namespace models;
 
-class Usuario{
+class Usuario {
     public $login;
     public $nome;
-    public $logado;
     public $email;
+    public $logado;
 
-    public function logar($login, $senha){
+    public function logar($login, $senha) {
         $conexaoDB = $this->conectarBanco();
         $sql = $conexaoDB->prepare("select login, nome, logado, celular from usuario
                                     where
