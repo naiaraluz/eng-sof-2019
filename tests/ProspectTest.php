@@ -12,13 +12,16 @@ class ProspectTest extends TestCase {
     /** @test */
     public function testBuscarProspect() {
         $prospect = new Prospect();
-        $prospect = $prospect->buscarProspect('cpf2');
+        $prospects[] = $prospect->buscarProspect('email2');
+
+        $prospect = $prospects[0];
 
         $this->assertEquals(
-            'nome2',
-            $prospect->nome
+            'cpf2',
+            $prospect[0]['cpf']
         );
         unset($prospect);
+        unset($prospects);
     }
 
     /** @test */

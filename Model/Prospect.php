@@ -19,10 +19,10 @@ class Prospect {
         $prospects = array();
 
         if ($email === null) {
-            $sql = $conexaoDB->prepare("select nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect");
+            $sql = $conexaoDB->prepare("select id, nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect");
 
         } else {
-            $sql = $conexaoDB->prepare("select nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect
+            $sql = $conexaoDB->prepare("select id, nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect
             where
             email = ?");
             $sql->bind_param("s", $email);
