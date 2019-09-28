@@ -1,5 +1,4 @@
 <?php
-
 namespace Model;
 
 class Usuario {
@@ -10,7 +9,7 @@ class Usuario {
 
     public function logar($login, $senha) {
         $conexaoDB = $this->conectarBanco();
-        $sql = $conexaoDB->prepare("select login, nome, logado, celular from usuario
+        $sql = $conexaoDB->prepare("select login, nome, email from usuario
                                     where
                                     login = ?
                                     and
@@ -18,14 +17,16 @@ class Usuario {
         $sql->bind_param("ss", $login, $senha);
         $sql->execute();
 
-        $resultado =$sql->get_result();
+        $resultado = $sql->get_result();
 
-        if($resultado->num_rows === 0){
+        if($resultado->num_rows === 0) {
           $this->login = null;
           $this->nome = null;  
           $this->email = null; 
           $this->logado = false;
+
         }else{
+
             while($linha = $resultado->fetch_assoc()) {
                 $this->login = $linha['login'];
                 $this->nome = $linha['nome'];
@@ -38,7 +39,7 @@ class Usuario {
         return $this->logado;
     }
 
-    public function incluirUsuario($nome, $email, $login, $senha){
+    public function incluirUsuario($nome, $email, $login, $senha) {
         $conexaoDB = $this->conectarBanco();
 
         $sqlInsert = $conexaoDB->prepare("insert into usuario
@@ -49,10 +50,15 @@ class Usuario {
 
         $sqlInsert->execute();
 
-        return TRUE;
+        if (!$sqlInsert->error) {
+            return TRUE;
+
+        } else {
+            return FALSE;
+        }
     }
 
-    private function conectarBanco(){
+    private function conectarBanco() {
         $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
         return $conn;
     }
