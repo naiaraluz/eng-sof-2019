@@ -2,6 +2,7 @@
 namespace Model;
 
 class Prospect {
+    public $id;
     public $nome;
     public $cpf;
     public $cep;
@@ -13,48 +14,46 @@ class Prospect {
     public $zipzop;
     public $facebook;
 
-    public function buscarProspect($cpf) {
+    public function buscarProspect($email=null) {
         $conexaoDB = $this->conectarBanco();
-        $prospect = new Prospect();
+        $prospects = array();
 
-        $sql = $conexaoDB->prepare("select nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect
-                                    where
-                                    cpf = ?");
-        $sql->bind_param("s", $cpf);
+        if ($email === null) {
+            $sql = $conexaoDB->prepare("select nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect");
+
+        } else {
+            $sql = $conexaoDB->prepare("select nome, cpf, cep, rua, bairro, cidade, uf, email, zipzop, facebook from prospect
+            where
+            email = ?");
+            $sql->bind_param("s", $email);
+        }
+        
         $sql->execute();
 
         $resultado = $sql->get_result();
 
-        if($resultado->num_rows === 0) {
-            $this->nome = null;
-            $this->cpf = null;
-            $this->cep = null;
-            $this->rua = null;
-            $this->bairro = null;
-            $this->cidade = null;
-            $this->uf = null;
-            $this->email = null;
-            $this->zipzop = null;
-            $this->facebook = null;
-
-        }else{
-
+        if($resultado->num_rows !== 0) {
+            
             while($linha = $resultado->fetch_assoc()) {
-                $prospect->nome = $linha['nome'];
-                $prospect->cpf = $linha['cpf'];
-                $prospect->cep = $linha['cep'];
-                $prospect->rua = $linha['rua'];
-                $prospect->bairro = $linha['bairro'];
-                $prospect->cidade = $linha['cidade'];
-                $prospect->uf = $linha['uf'];
-                $prospect->email = $linha['email'];
-                $prospect->zipzop = $linha['zipzop'];
-                $prospect->facebook = $linha['facebook'];
+                $prospect = array(
+                    "id" => $linha['id'],
+                    "nome" => $linha['nome'],
+                    "cpf" => $linha['cpf'],
+                    "cep" => $linha['cep'],
+                    "rua" => $linha['rua'],
+                    "bairro" => $linha['bairro'],
+                    "cidade" => $linha['cidade'],
+                    "uf" => $linha['uf'],
+                    "email" => $linha['email'],
+                    "zipzop" => $linha['zipzop'],
+                    "facebook" => $linha['facebook']
+                );
+                $prospects[] = $prospect;
             }
         }
         $sql->close();
         $conexaoDB->close();
-        return $prospect;
+        return $prospects;
     }
 
     public function incluirProspect($nome, $cpf, $cep, $rua, $bairro, $cidade, $uf, $email, $zipzop, $facebook) {
@@ -74,44 +73,50 @@ class Prospect {
         } else {
             return FALSE;
         }
+        $sqlInsert->close();
+        $conexaoDB->close();
     }
 
     public function alterarProspect($nome, $cpf, $cep, $rua, $bairro, $cidade, $uf, $email, $zipzop, $facebook, $id) {
         $conexaoDB = $this->conectarBanco();
 
-        $sqlInsert = $conexaoDB->prepare("update prospect set
+        $sqlUpdate = $conexaoDB->prepare("update prospect set
                                         nome = ?, cpf = ?, cep = ?, rua = ?, bairro = ?, cidade = ?, uf = ?, email = ?, zipzop = ?, facebook = ?
                                         where
                                         id = ?"
                                         );
-        $sqlInsert->bind_param("ssssssssssi", $nome, $cpf, $cep, $rua, $bairro, $cidade, $uf, $email, $zipzop, $facebook, $id);
+        $sqlUpdate->bind_param("ssssssssssi", $nome, $cpf, $cep, $rua, $bairro, $cidade, $uf, $email, $zipzop, $facebook, $id);
 
-        $sqlInsert->execute();
+        $sqlUpdate->execute();
 
-        if (!$sqlInsert->error) {
+        if (!$sqlUpdate->error) {
             return TRUE;
 
         } else {
             return FALSE;
         }
+        $sqlUpdate->close();
+        $conexaoDB->close();
     }
 
     public function deletarProspect($id) {
         $conexaoDB = $this->conectarBanco();
         
-        $sqlInsert = $conexaoDB->prepare("delete from prospect
+        $sqlDelete = $conexaoDB->prepare("delete from prospect
                                         where
                                         id = ?");
-        $sqlInsert->bind_param("i", $id);
+       $sqlDelete->bind_param("i", $id);
                                         
-        $sqlInsert->execute();
+       $sqlDelete->execute();
 
-        if (!$sqlInsert->error) {
+        if (!$sqlDelete->error) {
             return TRUE;
 
         } else {
             return FALSE;
         }
+        $sqlDelete->close();
+        $conexaoDB->close();
     }
 
     private function conectarBanco() {
