@@ -1,32 +1,30 @@
 <?php
-namespace tests;
-
+namespace test;
 require_once('../vendor/autoload.php');
-require_once('../Model/Usuario.php');
-
-use Model\Usuario;
+require_once('../models/Usuario.php');
 use PHPUnit\Framework\TestCase;
+use models\Usuario;
 
-class UsuarioTest extends TestCase {
+class UsuarioTest extends TestCase{
 
-    /** @test */
-    public function testLogar() {
-        $usuario = new Usuario();
-        $this->assertEquals(
-            TRUE,
-            $usuario->logar('nainai', '123')
-        );
-        unset($usuario);
-    }
+   /** @test */
+   public function testLogar(){
+      $usuario = new Usuario();
+      $this->assertEquals(
+         TRUE,
+         $usuario->logar('paulo', '123')
+      );
 
-    /** @test */
-    public function testIncluirUsuario() {
-        $usuario = new Usuario();
-        $this->assertEquals(
-            TRUE,
-            $usuario->incluirUsuario('naiara', 'nainai@gmail.com', 'nainai', '123')
-        );
-        unset($usuario);
-    }
+      unset($usuario);
+   }
+   /** @test */
+   public function testIncluirUsuario(){
+      $usuario = new Usuario();
+      $this->assertEquals(
+         TRUE,
+         $usuario->incluirUsuario("raul", "raul@gmail.com", "raul", "raul")
+      );
+      unset($usuario);
+   }
 }
 ?>

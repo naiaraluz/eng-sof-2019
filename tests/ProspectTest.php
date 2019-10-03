@@ -1,57 +1,108 @@
 <?php
-namespace tests;
-
+namespace test;
 require_once('../vendor/autoload.php');
-require_once('../Model/Prospect.php');
-
-use Model\Prospect;
+require_once('../models/Prospect.php');
 use PHPUnit\Framework\TestCase;
+use models\Prospect;
 
-class ProspectTest extends TestCase {
+class ProspectTest extends TestCase{
 
-    /** @test */
-    public function testBuscarProspect() {
-        $prospect = new Prospect();
-        $prospects[] = $prospect->buscarProspect('email2');
+   /** @test */
+   public function incluirProspect(){
+      $prospect = new Prospect();
+      $this->assertEquals(
+         TRUE,
+         $prospect->incluirProspect('Paulo Roberto Cordova', 'paulo@eu.com.br', '(49)96633-9988', 'facepaulo', '(49)8899-6699')
+      );
 
-        $prospect = $prospects[0];
+      unset($prospect);
+   }
+   /** @test */
+   public function atualizarProspect(){
+      $prospect = new Prospect();
+      $this->assertEquals(
+         TRUE,
+         $prospect->atualizarProspect('Paulo Roberto Cordova', 'paulo@gmail.com.br', '(49)96633-9988',  'facepaulo', '(49)8899-6699', 3)
+      );
+      unset($prospect);
+   }
+   /** @test */
+   public function excluirProspect(){
+      $prospect = new Prospect();
+      $this->assertEquals(
+         TRUE,
+         $prospect->excluirProspect(2)
+      );
+      unset($prospect);
+   }
+   /** @test */
+   public function buscarTodosProspectTest(){
+      $prospect = new Prospect();
+      $arrayComparar = array();
 
-        $this->assertEquals(
-            'cpf2',
-            $prospect[0]['cpf']
-        );
-        unset($prospect);
-        unset($prospects);
-    }
+      $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
+      $sqlBusca = $conn->prepare("select cod_prospect, nome, email, celular,
+                                          facebook, whatsapp
+                                          from prospect");
+      $sqlBusca->execute();
+      $result = $sqlBusca->get_result();
+      if($result->num_rows !== 0){
+         while($linha = $result->fetch_assoc()) {
+            $linhaComparar = array(
+               "codProspect" => $linha['cod_prospect'],
+               "nome" => $linha['nome'],
+               "email" => $linha['email'],
+               "celular" => $linha['celular'],
+               "facebook" => $linha['facebook'],
+               "whatsapp" => $linha['whatsapp']
+            );
+            $arrayComparar[] = $linhaComparar;
+         }
+      }
 
-    /** @test */
-    public function testIncluirProspect() {
-        $prospect = new Prospect();
-        $this->assertEquals(
-            TRUE,
-            $prospect->incluirProspect('nome', 'cpf', 'cep', 'rua', 'bairro', 'cidade', 'uf', 'email', 'zipzop', 'facebook')
-        );
-        unset($prospect);
-    }
+      $this->assertEquals(
+         $arrayComparar,
+         $prospect->buscarProspects()
+      );
+      unset($prospect);
+      $sqlBusca->close();
+      $conn->close();
+   }
+   /** @test */
+   public function buscarProspectPorEmailTest(){
+      $prospect = new Prospect();
+      $arrayComparar = array();
+      $emailProspect = 'gernunes@hotmail.com';
 
-    /** @test */
-    public function testAlterarProspect() {
-        $prospect = new Prospect();
-        $this->assertEquals(
-            TRUE,
-            $prospect->alterarProspect('nome2', 'cpf2', 'cep2', 'rua2', 'bairro2', 'cidade2', 'uf2', 'email2', 'zipzop2', 'facebook2', 2)
-        );
-        unset($prospect);
-    }
+      $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
+      $sqlBusca = $conn->prepare("select cod_prospect, nome, email, celular,
+                                          facebook, whatsapp
+                                          from prospect
+                                          where
+                                          email = '$emailProspect'");
+      $sqlBusca->execute();
+      $result = $sqlBusca->get_result();
+      if($result->num_rows !== 0){
+         while($linha = $result->fetch_assoc()) {
+            $linhaComparar = array(
+               "codProspect" => $linha['cod_prospect'],
+               "nome" => $linha['nome'],
+               "email" => $linha['email'],
+               "celular" => $linha['celular'],
+               "facebook" => $linha['facebook'],
+               "whatsapp" => $linha['whatsapp']
+            );
+            $arrayComparar[] = $linhaComparar;
+         }
+      }
 
-    /** @test */
-    public function testDeletarProspect() {
-        $prospect = new Prospect();
-        $this->assertEquals(
-            TRUE,
-            $prospect->deletarProspect(1)
-        );
-        unset($prospect);
-    }
+      $this->assertEquals(
+         $arrayComparar,
+         $prospect->buscarProspects($emailProspect)
+      );
+      unset($prospect);
+      $sqlBusca->close();
+      $conn->close();
+   }
 }
 ?>
