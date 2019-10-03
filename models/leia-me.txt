@@ -1,0 +1,5 @@
+Dados de conexão no código;
+Não usa try catch;
+Não usa padrões;
+Não usa comentários;
+Não faz gerência de configuração;
