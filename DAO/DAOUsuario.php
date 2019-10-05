@@ -61,7 +61,12 @@ class DAOUsuario{
     *return TRUE|Exception TRUE para inclusão bem sucedida ou Exception para inclusão mal sucedida
     */
    public function incluirUsuario($nome, $email, $login, $senha){
+      try{
       $conexaoDB = $this->conectarBanco();
+      }catch(\Exception $e){
+         die($e->getMessage());
+         }
+      }
 
       $sqlInsert = $conexaoDB->prepare("insert into usuario
                                        (nome, email, login, senha)
@@ -72,7 +77,8 @@ class DAOUsuario{
       if(!$sqlInsert->error){
          $retorno =  TRUE;
       }else{
-         $retorno =  FALSE;
+         throw new \Excption("Não foi possível incluir novo usuário");
+         die;
       }
       $conexaoDB->close();
       $sqlInsert->close();
