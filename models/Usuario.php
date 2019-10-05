@@ -1,13 +1,47 @@
 <?php
 namespace models;
 
-class Usuario{
-   public $login;
-   public $nome;
-   public $email;
-   public $celular;
-   public $logado;
 
+/**
+ * Classe Model de Usuário
+ * @author Lucas Gois e Naiara de Oliveira Luz 
+ * @package MODELS
+ */
+ class Usuario{
+    /**
+     * Login do usuário
+     * @var string
+     */
+   public $login;
+   /**
+     * Nome do usuário
+     * @var string
+     */
+   public $nome;
+   /**
+     * Email do usuário
+     * @var string
+     */
+   public $email;
+   /**
+     * Celular do usuário
+     * @var string
+     */
+   public $celular;
+   /**
+     * Celular do usuário
+     * @var boolean 
+     */
+   public $logado;
+   /**
+    * Carrega os atributos da classe
+    *@param string $login Login do usuário
+    *@param string $nome Nome do usuário
+    *@param string $email Email do usuário
+    *@param string $celular Celular do usuário
+    *@param boolean $logado Status do usuário no sistema
+    *@return void
+    */
    public function logar($login, $senha){
       $conexaoDB = $this->conectarBanco();
       $sql = $conexaoDB->prepare("select login, nome, email, celular from usuario
@@ -56,7 +90,10 @@ class Usuario{
       $sqlInsert->close();
       return $retorno;
    }
-
+   /**
+    * Realiza a conexão com o banco de dados usando msqli
+    *@return \mysqli|Excption
+    */
    private function conectarBanco(){
       $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
       return $conn;

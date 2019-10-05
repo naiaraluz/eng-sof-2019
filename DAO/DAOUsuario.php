@@ -1,7 +1,25 @@
 <?php
 namespace models;
+mysqli_report(MYSQLI_REPORT_STRICT);
+require_once('../models/Usuario.php');
+use MODELS\Usuario;
 
-class Usuario{
+/**
+ * Esta classe é responsável por fazer a comunicação com o banco de dados
+ * provendo as funções de logar e incluir um novo usuário
+ * @author Paulo Roberto Cordova
+ * @package DAO
+ */
+
+class DAOUsuario{
+   /**
+    * FAz o login do usuário no sistema e retorna um objeto usuário
+    *@param string $login Login do usuário
+    *@param string $senha Senha do usuário
+    *@return Usuario Se logado com sucesso os atributos serão retornados 
+    *com os dados do usuário, senão retornatão com o valor nulo,
+    *exceto o atributo $logado, que retorna FALSE
+    */
    public $login;
    public $nome;
    public $email;
@@ -9,7 +27,12 @@ class Usuario{
    public $logado;
 
    public function logar($login, $senha){
-      $conexaoDB = $this->conectarBanco();
+      try{
+         $conexaoDB = $this->conectarBanco();
+      }catch (\Exception $e){
+         die($e->getMessage());
+      }
+      $usuario = new Usuario();
       $sql = $conexaoDB->prepare("select login, nome, email, celular from usuario
                                   where
                                   login = ?
@@ -17,27 +40,26 @@ class Usuario{
                                   senha = ?");
       $sql->bind_param("ss", $login, $senha);
       $sql->execute();
-
       $resultado = $sql->get_result();
       if($resultado->num_rows === 0){
-         $this->login = null;
-         $this->nome = null;
-         $this->email = null;
-         $this->celular = null;
-         $this->logado = FALSE;
+         $usuario->addUsuario(null, null, null, null, FALSE);
       }else{
          While($linha = $resultado->fetch_assoc()){
-            $this->login = $linha['login'];
-            $this->nome = $linha['nome'];
-            $this->email = $linha['email'];
-            $this->celular = $linha['celular'];
-            $this->logado = TRUE;
+            $usuario->addUsuario($linha['login'], $linha['nome'], $linha['email'], $linha['celular'], TRUE);
          }
       }
       $sql->close();
       $conexaoDB->close();
-      return $this->logado;
+      return $usuario;
    }
+   /**
+    * Inclui um novo usuário
+    *@param String $nome Nome do usuário
+    *@param String $email Email do usuário
+    *@param String $login Login do usuário
+    *@param String $senha Senha do usuário
+    *return TRUE|Exception TRUE para inclusão bem sucedida ou Exception para inclusão mal sucedida
+    */
    public function incluirUsuario($nome, $email, $login, $senha){
       $conexaoDB = $this->conectarBanco();
 
@@ -56,10 +78,22 @@ class Usuario{
       $sqlInsert->close();
       return $retorno;
    }
-
+   /**
+    * Realiza a conexão com o banco de dados usando msqli
+    *@return \mysqli|Excption
+    */
    private function conectarBanco(){
-      $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
+      define ('DS', DIRECTORY_SEPARATOR);
+      define ('BASE_DIR', dirname(__FILE__).DS);
+      require_once(BASE.DIR.'conf.php');
+      require_once('config.php');
+      try{
+      $conn = new \mysqli($dbhost, $user, $password, $banco);
       return $conn;
+      }catch(mysqli_sql_exception $e){
+         throw new \Excption ($e);
+         die;
+      }
    }
 }
 ?>
