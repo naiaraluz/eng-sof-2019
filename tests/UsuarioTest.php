@@ -11,22 +11,22 @@ class UsuarioTest extends TestCase{
 
    /** @test */
    public function testLogar(){
-      $usuario = new Usuario();
+      $daousuario = new DAOUsuario();
       $this->assertEquals(
          TRUE,
-         $usuario->logar('paulo', '123')
+         $daousuario->logar('paulo', '123')
       );
 
-      unset($usuario);
+      unset($daousuario);
    }
    /** @test */
    public function testIncluirUsuario(){
-      $usuario = new Usuario();
+      $daousuario = new DAOUsuario();
       $this->assertEquals(
          TRUE,
-         $usuario->incluirUsuario("raul", "raul@gmail.com", "raul", "raul")
+         $daousuario->incluirUsuario("raul", "raul@gmail.com", "raul", "raul")
       );
-      unset($usuario);
+      unset($daousuario);
    }
 }
 ?>

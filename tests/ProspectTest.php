@@ -2,6 +2,7 @@
 namespace test;
 require_once('../vendor/autoload.php');
 require_once('../models/Prospect.php');
+require_once('../DAO/DAOProspect.php');
 use PHPUnit\Framework\TestCase;
 use models\Prospect;
 
@@ -9,35 +10,35 @@ class ProspectTest extends TestCase{
 
    /** @test */
    public function incluirProspect(){
-      $prospect = new Prospect();
+      $daoprospect = new DAOProspect();
       $this->assertEquals(
          TRUE,
-         $prospect->incluirProspect('Paulo Roberto Cordova', 'paulo@eu.com.br', '(49)96633-9988', 'facepaulo', '(49)8899-6699')
+         $daoprospect->incluirProspect('Paulo Roberto Cordova', 'paulo@eu.com.br', '(49)96633-9988', 'facepaulo', '(49)8899-6699')
       );
 
-      unset($prospect);
+      unset($daoprospect);
    }
    /** @test */
    public function atualizarProspect(){
-      $prospect = new Prospect();
+      $daoprospect = new DAOProspect();
       $this->assertEquals(
          TRUE,
-         $prospect->atualizarProspect('Paulo Roberto Cordova', 'paulo@gmail.com.br', '(49)96633-9988',  'facepaulo', '(49)8899-6699', 3)
+         $daoprospect->atualizarProspect('Paulo Roberto Cordova', 'paulo@gmail.com.br', '(49)96633-9988',  'facepaulo', '(49)8899-6699', 3)
       );
-      unset($prospect);
+      unset($daoprospect);
    }
    /** @test */
    public function excluirProspect(){
-      $prospect = new Prospect();
+      $daoprospect = new DAOProspect();
       $this->assertEquals(
          TRUE,
-         $prospect->excluirProspect(2)
+         $daoprospect->excluirProspect(2)
       );
-      unset($prospect);
+      unset($daoprospect);
    }
    /** @test */
    public function buscarTodosProspectTest(){
-      $prospect = new Prospect();
+      $daoprospect = new DAOProspect();
       $arrayComparar = array();
 
       $conn = new \mysqli('localhost', 'root', '', 'bd_prospects');
@@ -62,15 +63,15 @@ class ProspectTest extends TestCase{
 
       $this->assertEquals(
          $arrayComparar,
-         $prospect->buscarProspects()
+         $daoprospect->buscarProspects()
       );
-      unset($prospect);
+      unset($daoprospect);
       $sqlBusca->close();
       $conn->close();
    }
    /** @test */
    public function buscarProspectPorEmailTest(){
-      $prospect = new Prospect();
+      $daoprospect = new Prospect();
       $arrayComparar = array();
       $emailProspect = 'gernunes@hotmail.com';
 
@@ -98,9 +99,9 @@ class ProspectTest extends TestCase{
 
       $this->assertEquals(
          $arrayComparar,
-         $prospect->buscarProspects($emailProspect)
+         $daoprospect->buscarProspects($emailProspect)
       );
-      unset($prospect);
+      unset($daoprospect);
       $sqlBusca->close();
       $conn->close();
    }

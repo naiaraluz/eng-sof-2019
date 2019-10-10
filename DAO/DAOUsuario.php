@@ -7,25 +7,20 @@ use MODELS\Usuario;
 /**
  * Esta classe é responsável por fazer a comunicação com o banco de dados
  * provendo as funções de logar e incluir um novo usuário
- * @author Paulo Roberto Cordova
+ * @author Naiara de Oliveira Luz e Lucas Gois
  * @package DAO
  */
 
 class DAOUsuario{
+
    /**
-    * FAz o login do usuário no sistema e retorna um objeto usuário
+    * Faz o login do usuário no sistema e retorna um objeto usuário
     *@param string $login Login do usuário
     *@param string $senha Senha do usuário
     *@return Usuario Se logado com sucesso os atributos serão retornados 
     *com os dados do usuário, senão retornatão com o valor nulo,
     *exceto o atributo $logado, que retorna FALSE
     */
-   public $login;
-   public $nome;
-   public $email;
-   public $celular;
-   public $logado;
-
    public function logar($login, $senha){
       try{
          $conexaoDB = $this->conectarBanco();
@@ -58,17 +53,17 @@ class DAOUsuario{
     *@param String $email Email do usuário
     *@param String $login Login do usuário
     *@param String $senha Senha do usuário
-    *return TRUE|Exception TRUE para inclusão bem sucedida ou Exception para inclusão mal sucedida
+    *@return TRUE|Exception TRUE para inclusão bem sucedida ou Exception para inclusão mal sucedida
     */
    public function incluirUsuario($nome, $email, $login, $senha){
       try{
       $conexaoDB = $this->conectarBanco();
+
       }catch(\Exception $e){
          die($e->getMessage());
-         }
       }
 
-      $sqlInsert = $conexaoDB->prepare("insert into usuario
+      $sqlInsert = $conexaoDB->prepare( "insert into usuario
                                        (nome, email, login, senha)
                                        values
                                        (?, ?, ?, ?)");
