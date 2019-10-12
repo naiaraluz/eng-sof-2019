@@ -84,10 +84,13 @@ class DAOUsuario{
     *@return \mysqli|Excption
     */
    private function conectarBanco(){
-      define ('DS', DIRECTORY_SEPARATOR);
-      define ('BASE_DIR', dirname(__FILE__).DS);
-      require_once(BASE.DIR.'conf.php');
-      require_once('config.php');
+      if(!define('DS')){
+         define ('DS', DIRECTORY_SEPARATOR);
+      }
+      if(!define('BASE_DIR')){
+         define ('BASE_DIR', dirname(__FILE__).DS);
+      }
+      require(BASE.DIR.'config.php');
       try{
       $conn = new \mysqli($dbhost, $user, $password, $banco);
       return $conn;
