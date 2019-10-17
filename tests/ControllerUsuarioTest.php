@@ -27,7 +27,7 @@ class ControllerUsuarioTest extends TestCase{
 
         try{
             $this->asserEquals(
-                TRUE;
+                TRUE,
                 $ctrlUsuario->salvarusuario('Marcos Dias', 'dias@noites.com', 'dias', '145')
             );
         }catch(\Exception $e){
