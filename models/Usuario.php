@@ -23,6 +23,11 @@ class Usuario{
     */
    public $email;
    /**
+    * Celular do Usuários
+    * @var string
+    */
+   public $celular;
+   /**
     * Status do Usuário no sistema
     * @var string
     */
@@ -36,10 +41,11 @@ class Usuario{
     * @param string $logado Se for logado com sucesso recebe TRUE, senão recebe FALSE
     * @return Void
     */
-   public function addUsuario($login, $nome, $email, $logado){
+   public function addUsuario($login, $nome, $email, $celular, $logado){ //Erro: Falta o celular...
      $this->login = $login;
      $this->nome = $nome;
      $this->email = $email;
+     $this->celular = $celular;
      $this->logado = $logado;
    }
 }
