@@ -1,3 +1,10 @@
+<?php
+session_start();
+require_once('../models/Usuario.php');
+
+if(isset($_SESSION['usuario'])){
+
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,7 +25,9 @@
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    Bem vindo: ---
+                    Bem vindo: <?php $usuario = unserialize($_SESSION['usuario']);
+                    echo $usuario->nome;
+                    ?>
                 </span>
             </div>
         </nav>
@@ -27,4 +36,8 @@
     </body>
 </html>
 <?php
+}else{
+    $_SESSION['erroLogin']= "Você precisa fazer login para acessar o sistema";
+    header("Location: ../index.php");
+}
 ?>
