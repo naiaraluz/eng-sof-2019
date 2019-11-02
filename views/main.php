@@ -21,7 +21,7 @@ if(isset($_SESSION['usuario'])){
                         <a class="nav-link" href="#">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Cadastrar Prospects</a>
+                        <a class="nav-link" href="Usuario/v_incluir_usuario.php">Cadastrar Prospects</a>
                     </li>
                 </ul>
                 <span class="navbar-text">

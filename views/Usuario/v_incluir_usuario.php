@@ -3,7 +3,7 @@
 <!-- Tratando erros com sessão -->
     <head>
         <title>Bem Vindo ao Sistema</title>
-        <link rel="stylesheet" type="text/css" href="libs/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.css">
         <meta charset="UTF-8">
     </head>
     <body>
