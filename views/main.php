@@ -1,9 +1,11 @@
 <?php
 session_start();
-require_once('../models/Usuario.php');
+
+$separator = DIRECTORY_SEPARATOR;
+$root = $_SERVER['DOCUMENT_ROOT'].$separator;
+require_once($root.'prospectorcolector/models/Usuario.php');
 
 if(isset($_SESSION['usuario'])){
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,7 +23,7 @@ if(isset($_SESSION['usuario'])){
                         <a class="nav-link" href="#">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Usuario/v_incluir_usuario.php">Cadastrar Prospects</a>
+                        <a class="nav-link" href="Usuario/v_incluir_usuario.php">Cadastrar Usuário</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
