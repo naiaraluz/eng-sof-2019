@@ -35,6 +35,15 @@
                 </div>
                 <button type="submit" class="btn btn-success">Cadastrar</button>
                 <a href="../../index.php" class="btn btn-danger">Cancelar</a>
+                <p class="text-center text-danger">
+                ahdgkadgkasgd
+                <?php
+                    if(isset($_SESSION['erroCadastro'])){
+                        echo $_SESSION['erroCadastro'];
+                        unset($_SESSION['erroCadastro']);
+                    }
+                ?>
+                </p>
             </form>
         </div>
     </body>

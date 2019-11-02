@@ -12,10 +12,12 @@ if(isset($_POST['login']) && isset($_POST['senha']) && isset($_POST['email']) &&
    $ctrlUsuario = new ControllerUsuario();
    try {
       $ctrlUsuario->salvarUsuario($nome, $email, $login, $senha);
+      $_SESSION['erroCadastro'] = "Erro";
       header("Location: ../../views/main.php");
 
    }catch(\Exception $e){
-      header("Location: ../../views/main.php");
+      $_SESSION['erroCadastro'] = $e->getMessage();
+      header("Location: ../../views/Usuario/v_incluir_usuario.php");
    }
 
 }else{

@@ -3,7 +3,7 @@ namespace MODELS  ;
 /**
  * Classe Model de Prospects
  *
- * @author Paulo Roberto Córdova
+ * @author Naiara de Oliveira Luz e Lucas Gois
  */
 class Prospect{
    /**

@@ -6,7 +6,7 @@ use MODELS\Prospect;
  * Esta classe é reponsável por fazer a comunicação com o banco de dados,
  * provendo as funções CRUD para os Prospects
  *
- * @author Paulo Roberto Córdova
+ * @author Naiara de Oliveira Luz e Lucas Gois
  * @package DAO
  */
 class DAOProspect{
@@ -151,7 +151,7 @@ class DAOProspect{
       if (!defined('BASE_DIR')) {
          define( 'BASE_DIR', dirname( __FILE__ ) . DS );
       }
-      require(BASE_DIR . 'config.php');
+      require($root . 'prospectcolector/DAO/config.php');
       try {
          $conn = new \MySQLi($dbhost, $user, $password, $banco);
          return $conn;
