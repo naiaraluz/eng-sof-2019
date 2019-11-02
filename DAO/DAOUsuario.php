@@ -1,9 +1,13 @@
 <?php
 namespace DAO;
+
 mysqli_report(MYSQLI_REPORT_STRICT);
+
 $separador = DIRECTORY_SEPARATOR;
-$diretorioBaSE = dirname( __FILE__ ).$separador;
-require($diretorioBaSE . '../models/Usuario.php');
+$root = $_SERVER['DOCUMENT_ROOT'].$separador;
+
+require($root . 'prospectcolector/models/Usuario.php');
+
 use models\Usuario;
 /**
  * Esta classe é reponsável por fazer a comunicação com o banco de dados,
@@ -76,9 +80,11 @@ class DAOUsuario{
       return $retorno;
    }
    private function conectarBanco(){
-     $separador = DIRECTORY_SEPARATOR;
-     $diretorioBaSE = dirname( __FILE__ ).$separador;
-      require($diretorioBaSE . 'config.php');
+      $separador = DIRECTORY_SEPARATOR;
+      $root = $_SERVER['DOCUMENT_ROOT'].$separador;
+
+      require($root . 'prospectcolector/DAO/config.php');
+
       try {
          $conn = new \MySQLi($bdhost, $user, $password, $banco);
          return $conn;

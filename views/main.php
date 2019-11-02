@@ -3,7 +3,7 @@ session_start();
 
 $separator = DIRECTORY_SEPARATOR;
 $root = $_SERVER['DOCUMENT_ROOT'].$separator;
-require_once($root.'prospectorcolector/models/Usuario.php');
+require_once($root.'prospectcolector/models/Usuario.php');
 
 if(isset($_SESSION['usuario'])){
 ?>

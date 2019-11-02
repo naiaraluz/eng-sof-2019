@@ -2,7 +2,7 @@
 namespace CONTROLLERS;
 $separator = DIRECTORY_SEPARATOR;
 $root = $_SERVER['DOCUMENT_ROOT'].$separator;
-require_once($root.'prospectorcolector/DAO/DAOUsuario.php');
+require_once($root.'prospectcolector/DAO/DAOUsuario.php');
 use DAO\DAOUsuario;
 
 /**
