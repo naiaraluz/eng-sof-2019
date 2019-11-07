@@ -39,7 +39,6 @@ session_start();
             </form>
             <p class="text-center"><a href="views/Usuario/v_incluir_usuario.php">Cadastre-se</a></p>
             <p class="text-center text-danger">
-            dfghjk
                 <?php
                     if(isset($_SESSION['erroLogin'])){
                         echo $_SESSION['erroLogin'];

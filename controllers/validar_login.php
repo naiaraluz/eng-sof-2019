@@ -14,11 +14,12 @@ if(isset($_POST['login']) && isset($_POST['senha'])){
       $_SESSION['usuario'] = serialize($usuario);
       header("Location: ../views/main.php");
    }else{
-       $_SESSION['erroLogin'] = "Login ou senha inválidos! Tente novamente.";
-       header("Location:../index.php");
+      $_SESSION['erroLogin'] = "Login ou senha inválidos! Tente novamente.";
+      header("Location: ../index.php");
    }
 }else{
    $_SESSION['erroLogin'] = "Você precisa fazer login para acessar o sistema";
    header("Location: ../index.php");
 }
+
 ?>

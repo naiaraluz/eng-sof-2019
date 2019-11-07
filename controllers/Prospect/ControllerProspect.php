@@ -1,13 +1,17 @@
 <?php
 namespace CONTROLLERS;
-require('../DAO/DAOProspect.php');
+
+$separador = DIRECTORY_SEPARATOR;
+$root = $_SERVER['DOCUMENT_ROOT'].$separador;
+require_once($root .'prospectcolector/DAO/DAOProspect.php');
 use DAO\DAOProspect;
+
 /**
  * Esta classe é responsável por fazer o tratamento dos dados para apresentação e/ou
  * envio para a DAO executar as consultas no banco de dados.
  * Seu escopo se limita às funções da entidade prospect.
  *
- * @author Naiara de Oliveira Luz e Lucas Gois
+ * @author Paulo Roberto Córdova
  *
  */
 class ControllerProspect{
@@ -20,6 +24,7 @@ class ControllerProspect{
     */
    public function salvarProspect($prospect){
       $daoProspect = new DAOProspect();
+
       if($prospect->codigo === null){
          /**
           * Captura a exceção retornada pelo DAO no caso de falha ao incluir prospect
@@ -71,6 +76,7 @@ class ControllerProspect{
    public function buscarProspects($email=null){
      $daoProspect = new DAOProspect();
      $prospects = array();
+
      if($email === null){
         $prospects = $daoProspect->buscarProspects();
         return $prospects;
@@ -80,4 +86,6 @@ class ControllerProspect{
      }
    }
 }
-?> 
+
+
+?>

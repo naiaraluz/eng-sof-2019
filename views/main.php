@@ -1,11 +1,11 @@
+
 <?php
 session_start();
-
-$separator = DIRECTORY_SEPARATOR;
-$root = $_SERVER['DOCUMENT_ROOT'].$separator;
-require_once($root.'prospectcolector/models/Usuario.php');
+require_once('../models/Usuario.php');
+use models\Usuario;
 
 if(isset($_SESSION['usuario'])){
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,7 @@ if(isset($_SESSION['usuario'])){
                         <a class="nav-link" href="#">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Usuario/v_incluir_usuario.php">Cadastrar Usuário</a>
+                        <a class="nav-link" href="Prospect/v_listar_prospect.php">Cadastrar Prospects</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
@@ -39,7 +39,7 @@ if(isset($_SESSION['usuario'])){
 </html>
 <?php
 }else{
-    $_SESSION['erroLogin']= "Você precisa fazer login para acessar o sistema";
+    $_SESSION['erroLogin'] = "Você precisa fazer login para acessar o sistema";
     header("Location: ../index.php");
 }
 ?>

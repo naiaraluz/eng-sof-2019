@@ -9,11 +9,12 @@ $root = $_SERVER['DOCUMENT_ROOT'].$separador;
 require($root . 'prospectcolector/models/Usuario.php');
 
 use models\Usuario;
+
 /**
  * Esta classe é reponsável por fazer a comunicação com o banco de dados,
  * provendo as funções de logar e incluir um novo usuário
  *
- * @author Naiara de Oliveira Luz e Lucas Gois
+ * @author Paulo Roberto Córdova
  *
  */
 class DAOUsuario{
@@ -29,7 +30,9 @@ class DAOUsuario{
       } catch (\Exception $e) {
          die($e->getMessage());
       }
+
       $usuario = new Usuario();
+
       $sql = $conexaoDB->prepare("select login, nome, email, celular from usuario
                                   where
                                   login = ?
@@ -37,6 +40,7 @@ class DAOUsuario{
                                   senha = ?");
       $sql->bind_param("ss", $login, $senha);
       $sql->execute();
+
       $resultado = $sql->get_result();
       if($resultado->num_rows === 0){
          $usuario->addUsuario(null, null, null, null, FALSE);
@@ -63,12 +67,14 @@ class DAOUsuario{
       } catch (\Exception $e) {
          die($e->getMessage());
       }
+
       $sqlInsert = $conexaoDB->prepare("insert into usuario
                                        (nome, email, login, senha)
                                        values
                                        (?, ?, ?, ?)");
       $sqlInsert->bind_param("ssss", $nome, $email, $login, $senha);
       $sqlInsert->execute();
+
       if(!$sqlInsert->error){
          $retorno =  TRUE;
       }else{
@@ -79,14 +85,15 @@ class DAOUsuario{
       $sqlInsert->close();
       return $retorno;
    }
+
    private function conectarBanco(){
-      $separador = DIRECTORY_SEPARATOR;
-      $root = $_SERVER['DOCUMENT_ROOT'].$separador;
+     $separador = DIRECTORY_SEPARATOR;
+     $root = $_SERVER['DOCUMENT_ROOT'].$separador;
 
       require($root . 'prospectcolector/DAO/config.php');
 
       try {
-         $conn = new \MySQLi($bdhost, $user, $password, $banco);
+         $conn = new \MySQLi($dbhost, $user, $password, $banco);
          return $conn;
       }catch (mysqli_sql_exception $e) {
          throw new \Exception($e);
