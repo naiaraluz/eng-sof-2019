@@ -10,7 +10,7 @@ if(isset($_SESSION['usuario'])){
 ?>
 <!DOCTYPE html>
 <html>
-<!-- Tratando erros com sessão -->
+
     <head>
         <title>Bem Vindo ao Sistema</title>
         <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.css">

@@ -10,7 +10,7 @@ use DAO\DAOUsuario;
  * envio para a DAO
  * Seu escopo limita-se às funções da entidade Usuário
  *
- * @author Paulo Roberto Córdova
+ * @author Naiara de Oliveira Luz e Lucas Gois
  */
 class ControllerUsuario{
    /**

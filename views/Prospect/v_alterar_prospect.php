@@ -1,12 +1,19 @@
 <?php
 session_start();
-require_once('../../models/Usuario.php');
 require_once('../../controllers/Prospect/ControllerProspect.php');
+require_once('../../models/Usuario.php');
 
-use controllers\ControllerProspect;
 use models\Usuario;
+use controllers\ControllerProspect;
 
 if(isset($_SESSION['usuario'])){
+    if(isset($_GET['email'])){
+        $email = $_GET['email'];
+        $ctrlProspect = new ControllerProspect();
+        $arrayProspect = $ctrlProspect->buscarProspects($email);
+
+        $prospect = $arrayProspects[0];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,15 +43,17 @@ if(isset($_SESSION['usuario'])){
         </nav>
         </header>
         <div class="container">
-            <form class="form-signin" action="../../controllers/Prospect/c_incluir_prospect.php" method="POST">
+            <form class="form-signin" action="../../controllers/usuario/c_alterar_usuario.php" method="POST">
                 <div>
-                    <h5 class="form-signin-heading">Cadastro de Prospect:</h5>
+                    <h5 class="form-signin-heading">Alterar Prospect:</h5>
                 </div class="">
                 <div class="form-group">
+                     <label for="codigo">Código:</label>
+                     <input name="codigo" id="nome" type="text" class="form-control" required readonly/>
                      <label for="nome">Nome:</label>
-                     <input name="nome" id="nome" type="text" placeholder="Digite seu nome" class="form-control" required autofocus/>
+                     <input name="nome" id="nome" type="text" placeholder="Digite seu nome" class="form-control" required/>
                      <label for="email">E-mail:</label>
-                     <input name="email" id="email" placeholder="Digite seu E-mail" class="form-control" required autocomplete="off"/>
+                     <input name="email" id="email" placeholder="Digite seu E-mail" class="form-control" required autofocus autocomplete="off"/>
                      <label for="celular">Celular:</label>
                      <input name="celular" id="celular" type="text" placeholder="Digite seu celular" class="form-control" required/>
                      <label for="whatsapp">Whatsapp:</label>
@@ -55,20 +64,12 @@ if(isset($_SESSION['usuario'])){
                 <button type="submit" class="btn btn-success">Cadastrar</button>
                 <a href="v_listar_prospect.php" class="btn btn-danger">Cancelar</a>
             </form>
-            <p class="text-center text-danger">
-                <?php
-                  if(isset($_SESSION['erroNovoProspect'])){
-                     echo $_SESSION['erroNovoProspect'];
-                     unset($_SESSION['erroNovoProspect']);
-                  }
-                ?>
-            </p>
         </div>
     </body>
 </html>
 <?php
 }else{
-    $_SESSION['erroLogin'] = "Você precisa fazer login para acessar o sistema";
-    header("Location: ../index.php");
+    $_SESSION['erroLogin'] = "Você precisa estar logado para executar esta operação!";
+    header("Location: ../../index.php");
 }
 ?>

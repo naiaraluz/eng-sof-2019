@@ -14,7 +14,7 @@ use models\Usuario;
  * Esta classe é reponsável por fazer a comunicação com o banco de dados,
  * provendo as funções de logar e incluir um novo usuário
  *
- * @author Paulo Roberto Córdova
+ * @author Naiara de Oliveira Luz e Lucas Gois
  *
  */
 class DAOUsuario{
