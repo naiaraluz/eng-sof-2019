@@ -33,7 +33,7 @@ if(isset($_SESSION['usuario'])){
                         <a class="nav-link" href="../main.php">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Cadastrar Prospects</a>
+                        <a class="nav-link" href="v_listar_prospect.php">Cadastrar Prospects</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
