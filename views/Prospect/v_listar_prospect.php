@@ -65,8 +65,8 @@ if(isset($_SESSION['usuario'])){
                                     echo '<td>'.$prospect->celular.'</td>';
                                     echo '<td>'.$prospect->facebook.'</td>';
                                     echo '<td>'.$prospect->whatsapp.'</td>';
-                                    echo '<td width="150"><a href="v_alterar_prospect.php?email="'.$prospect->email.'">alterar</a> |
-                                    <a href="../../controllers/Prospect/c_excluir_prospect.php?codigo'.$prospect->codigo.'">excluir</a></td>' ;
+                                    echo '<td width="150"><a href="v_alterar_prospect.php?email='.$prospect->email.'">alterar</a> |
+                                    <a href="../../controllers/Prospect/c_excluir_prospect.php?codigo='.$prospect->codigo.'">excluir</a></td>' ;
                                 echo '</tr>';
                             }
                         ?>

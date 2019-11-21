@@ -73,10 +73,11 @@ class ControllerProspect{
          throw new \Exception($e->getMessage());
       }
    }
+
    public function buscarProspects($email=null){
      $daoProspect = new DAOProspect();
      $prospects = array();
-
+     
      if($email === null){
         $prospects = $daoProspect->buscarProspects();
         return $prospects;

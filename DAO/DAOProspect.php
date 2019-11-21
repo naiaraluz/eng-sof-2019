@@ -121,7 +121,7 @@ class DAOProspect{
     * @return Array[Prospect] Se informado email, retorna somente o prospect relacionado.
     * Senão, retornará todos os prospects do banco de dados
     */
-   public function buscarProspects($email=null){
+    public function buscarProspects($email=null){
       try {
          $conexaoDB = $this->conectarBanco();
       } catch (\Exception $e) {
@@ -129,7 +129,6 @@ class DAOProspect{
       }
       /*Array que será retornado com um ou mais prospects*/
       $prospects = array();
-
       if($email === null){
          $sqlBusca = $conexaoDB->prepare("select cod_prospect, nome, email, celular,
                                           facebook, whatsapp
@@ -144,7 +143,6 @@ class DAOProspect{
          $sqlBusca->bind_param("s", $email);
          $sqlBusca->execute();
       }
-
       $resultado = $sqlBusca->get_result();
       if($resultado->num_rows !== 0){
          while($linha = $resultado->fetch_assoc()){
@@ -154,11 +152,11 @@ class DAOProspect{
             $prospects[] = $prospect;
          }
       }
-      return $prospects;
       $conexaoDB->close();
       $sqlBusca->close();
-
+      return $prospects;
    }
+
    private function conectarBanco(){
       if (!defined('DS')) {
          define( 'DS', DIRECTORY_SEPARATOR );

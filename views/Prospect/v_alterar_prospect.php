@@ -9,8 +9,10 @@ use controllers\ControllerProspect;
 if(isset($_SESSION['usuario'])){
     if(isset($_GET['email'])){
         $email = $_GET['email'];
+
         $ctrlProspect = new ControllerProspect();
-        $arrayProspect = $ctrlProspect->buscarProspects($email);
+
+        $arrayProspects = $ctrlProspect->buscarProspects($email);
 
         $prospect = $arrayProspects[0];
     }
@@ -43,27 +45,35 @@ if(isset($_SESSION['usuario'])){
         </nav>
         </header>
         <div class="container">
-            <form class="form-signin" action="../../controllers/usuario/c_alterar_usuario.php" method="POST">
+            <form class="form-signin" action="../../controllers/Prospect/c_alterar_prospect.php" method="POST">
                 <div>
                     <h5 class="form-signin-heading">Alterar Prospect:</h5>
                 </div class="">
                 <div class="form-group">
                      <label for="codigo">Código:</label>
-                     <input name="codigo" id="nome" type="text" class="form-control" required readonly/>
+                     <input name="codigo" id="codigo" <?php echo 'value="'.$prospect->codigo.'"' ?> type="text" class="form-control" required readonly/>
                      <label for="nome">Nome:</label>
-                     <input name="nome" id="nome" type="text" placeholder="Digite seu nome" class="form-control" required/>
+                     <input name="nome" id="nome" <?php echo 'value="'.$prospect->nome.'"' ?> type="text" placeholder="Digite seu nome" class="form-control" required/>
                      <label for="email">E-mail:</label>
-                     <input name="email" id="email" placeholder="Digite seu E-mail" class="form-control" required autofocus autocomplete="off"/>
+                     <input name="email" id="email" <?php echo 'value="'.$prospect->email.'"' ?> placeholder="Digite seu E-mail" class="form-control" required autofocus autocomplete="off"/>
                      <label for="celular">Celular:</label>
-                     <input name="celular" id="celular" type="text" placeholder="Digite seu celular" class="form-control" required/>
+                     <input name="celular" id="celular" <?php echo 'value="'.$prospect->celular.'"' ?> type="text" placeholder="Digite seu celular" class="form-control" required/>
                      <label for="whatsapp">Whatsapp:</label>
-                     <input name="whatsapp" id="whatsapp" type="text" placeholder="Digite seu whatsapp" class="form-control" required/>
+                     <input name="whatsapp" id="whatsapp" <?php echo 'value="'.$prospect->whatsapp.'"' ?> type="text" placeholder="Digite seu whatsapp" class="form-control" required/>
                      <label for="facebook">Facebook:</label>
-                     <input name="facebook" id="facebook" type="text" placeholder="Digite sua facebook" class="form-control" required/>
+                     <input name="facebook" id="facebook" <?php echo 'value="'.$prospect->facebook.'"' ?> type="text" placeholder="Digite sua facebook" class="form-control" required/>
                 </div>
-                <button type="submit" class="btn btn-success">Cadastrar</button>
+                <button type="submit" class="btn btn-success">Salvar</button>
                 <a href="v_listar_prospect.php" class="btn btn-danger">Cancelar</a>
             </form>
+            <p class="text-center text-danger">
+                <?php
+                  if(isset($_SESSION['erroAlteracao'])){
+                     echo $_SESSION['erroAlteracao'];
+                     unset($_SESSION['erroAlteracao']);
+                  }
+                ?>
+            </p>
         </div>
     </body>
 </html>
