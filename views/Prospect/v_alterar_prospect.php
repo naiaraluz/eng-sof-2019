@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require_once('../../controllers/Prospect/ControllerProspect.php');
 require_once('../../models/Usuario.php');
 
@@ -10,6 +11,8 @@ if(isset($_SESSION['usuario'])){
 
     if(isset($_GET['email'])){
         $email = $_GET['email'];
+
+        $_SESSION['emailAtual'] = $email;
 
         $ctrlProspect = new ControllerProspect();
 

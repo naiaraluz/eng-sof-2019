@@ -26,8 +26,10 @@ class DAOProspect{
     * @return TRUE|Exception
     */
    public function incluirProspect($nome, $email, $celular, $facebook, $whatsapp){
+      
       try {
          $conexaoDB = $this->conectarBanco();
+
       } catch (\Exception $e) {
          die($e->getMessage());
       }
@@ -39,11 +41,17 @@ class DAOProspect{
       $sqlInsert->bind_param("sssss", $nome, $email,$celular,$facebook,$whatsapp);
       $sqlInsert->execute();
 
-      if(!$sqlInsert->error){
+      if (!$sqlInsert->error) {
          $retorno = TRUE;
+
       }else{
-         throw new \Exception("Não foi possível incluir novo prospect!");
-         die;
+
+         if (strpos($sqlInsert->error, 'email') !== false) {
+            throw new \Exception('Já existe um cadastrado com o email: '.$email);
+         
+         } else {
+            throw new \Exception('Não foi possível incluir o prospect!');
+         }
       }
       $conexaoDB->close();
       $sqlInsert->close();
@@ -60,8 +68,10 @@ class DAOProspect{
     * @return TRUE|Exception
     */
    public function atualizarProspect($nome, $email, $celular, $facebook, $whatsapp, $codProspect){
+
       try {
          $conexaoDB = $this->conectarBanco();
+
       } catch (\Exception $e) {
          die($e->getMessage());
       }
@@ -74,14 +84,22 @@ class DAOProspect{
                                         whatsapp = ?
                                         where
                                         cod_prospect = ?");
-      $sqlUpdate->bind_param("sssssi", $nome, $email,$celular,$facebook,$whatsapp, $codProspect);
-      $sqlUpdate->execute();
 
-      if(!$sqlUpdate->error){
+      $sqlUpdate->bind_param("sssssi", $nome, $email, $celular, $facebook, $whatsapp, $codProspect);
+
+      $sqlUpdate->execute();
+      
+      if (!$sqlUpdate->error) {
          $retorno = TRUE;
-      }else{
-         throw new \Exception("Não foi possível alterar o prospect!");
-         die;
+
+      } else {
+
+         if (strpos($sqlUpdate->error, 'email') !== false) {
+            throw new \Exception('Já existe um cadastrado com o email: '.$email);
+         
+         } else {
+            throw new \Exception('Não foi possível alterar o prospect!');
+         }
       }
       $conexaoDB->close();
       $sqlUpdate->close();

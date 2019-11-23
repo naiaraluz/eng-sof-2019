@@ -4,6 +4,7 @@ namespace CONTROLLERS;
 $separador = DIRECTORY_SEPARATOR;
 $root = $_SERVER['DOCUMENT_ROOT'].$separador;
 require_once($root .'prospectcolector/DAO/DAOProspect.php');
+
 use DAO\DAOProspect;
 
 /**
@@ -12,9 +13,27 @@ use DAO\DAOProspect;
  * Seu escopo se limita às funções da entidade prospect.
  *
  * @author Naiara de Oliveira Luz e Lucas Gois
- *
  */
 class ControllerProspect{
+
+   /**
+    * Valida o prospect.
+    *
+    * @param Prospect $prospect Objeto do tipo Prospect.
+    * @return TRUE|Exception Retorna true caso esteja válido e Exception caso seja inválido.
+    */
+   private function validaProspect($prospect) {
+
+      if (strpos($prospect->email, '@') === false) {
+         throw new \Exception('Email precisa ter "@"');
+      }
+
+      if (strpos($prospect->email, '#') !== false) {
+         throw new \Exception('Email não pode ter "#"');
+      }
+      return true;
+   }
+
    /**
     * Recebe um objeto do tipo Prospect, verifica se é para salvar ou alterar
     * e envia para a DAO executar a operação solicitada
@@ -23,6 +42,13 @@ class ControllerProspect{
     * @return TRUE|Exception Retorna TRUE caso a operação tenha sido bem sucedida e Exception, caso não tenha.
     */
    public function salvarProspect($prospect){
+      
+      try {
+         $this->validaProspect($prospect);
+      } catch (\Exception $ex) {
+         throw new \Exception($ex->getMessage());
+      }
+
       $daoProspect = new DAOProspect();
 
       if($prospect->codigo === null){
@@ -34,21 +60,31 @@ class ControllerProspect{
             $daoProspect->incluirProspect($prospect->nome, $prospect->email, $prospect->celular, $prospect->facebook,
                                        $prospect->whatsapp);
             return TRUE;
+
          }catch(\Exception $e){
             throw new \Exception($e->getMessage());
          }
-      }else{
+
+      } else {
           /**
           * Captura a exceção retornada pelo DAO no caso de falha ao atualizar prospect
           * e dispara outra exceção para ser tratada por quem chamar a função
           */
-         try{
-            $daoProspect->atualizarProspect($prospect->nome, $prospect->email, $prospect->celular, $prospect->facebook,
-                                            $prospect->whatsapp, $prospect->codigo);
+         try {
+            $daoProspect->atualizarProspect(
+               $prospect->nome,
+               $prospect->email,
+               $prospect->celular,
+               $prospect->facebook,
+               $prospect->whatsapp,
+               $prospect->codigo
+            );
+
             unset($daoProspect);
             return TRUE;
-         }catch(\Exception $e){
-            throw new \Exception($e);
+
+         } catch (\Exception $ex) {
+            throw new \Exception($ex->getMessage());
          }
       }
    }
@@ -60,7 +96,7 @@ class ControllerProspect{
     * ou uma Exception caso não tenha.
     */
    public function excluirProspect($prospect){
-      $daoProspect = new DAOProspect();
+       $daoProspect = new DAOProspect();
       /**
        * Captura a exceção retornada pelo DAO no caso de falha ao excluir prospect
        * e dispara outra exceção para ser tratada por quem chamar a função
@@ -69,6 +105,7 @@ class ControllerProspect{
          $daoProspect->excluirProspect($prospect->codigo);
          unset($daoProspect);
          return TRUE;
+
       }catch(\Exception $e){
          throw new \Exception($e->getMessage());
       }
@@ -87,6 +124,4 @@ class ControllerProspect{
      }
    }
 }
-
-
 ?>

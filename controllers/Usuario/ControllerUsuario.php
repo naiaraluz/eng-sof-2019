@@ -13,6 +13,7 @@ use DAO\DAOUsuario;
  * @author Naiara de Oliveira Luz e Lucas Gois
  */
 class ControllerUsuario{
+
    /**
     * Recebe os dados de login, faz o devido tratamento e envia para a DAO executar
     * no banco de dados
@@ -40,6 +41,14 @@ class ControllerUsuario{
     * ou uma Exception caso não tenha.
     */
    public function salvarUsuario($nome, $email, $login, $senha){
+
+      if (strpos($email, '@') === false) {
+         throw new \Exception('Email precisa ter "@"');
+      }
+      if (strpos($email, '#') !== false) {
+         throw new \Exception('Email não pode ter "#"');
+      }
+
       $daoUsuario = new DAOUsuario();
       /**
        * Captura a exceção retornada pela DAO no caso de falha ao incluir um usuário
@@ -49,6 +58,7 @@ class ControllerUsuario{
          $retorno = $daoUsuario->incluirUsuario($nome, $email, $login, $senha);
          unset($daoUsuario);
          return $retorno;
+
       }catch(\Exception $e){
          throw new \Exception($e->getMessage());
       }

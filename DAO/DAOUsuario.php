@@ -18,6 +18,7 @@ use models\Usuario;
  *
  */
 class DAOUsuario{
+
    /**
     * Faz o login no sisema validando os dados fornecidos pelo usuário
     * @param string $login Login do usuário
@@ -42,6 +43,7 @@ class DAOUsuario{
       $sql->execute();
 
       $resultado = $sql->get_result();
+      
       if($resultado->num_rows === 0){
          $usuario->addUsuario(null, null, null, null, FALSE);
       }else{
@@ -77,9 +79,15 @@ class DAOUsuario{
 
       if(!$sqlInsert->error){
          $retorno =  TRUE;
+
       }else{
-         throw new \Exception("Não foi possível incluir novo usuário!");
-         die;
+
+         if (strpos($sqlInsert->error, 'login') !== false) {
+            throw new \Exception('Já existe um cadastrado com o login: '.$login);
+         
+         } else {
+            throw new \Exception('Não foi possível incluir o usuário!'.$sqlInsert->error);
+         }
       }
       $conexaoDB->close();
       $sqlInsert->close();
