@@ -7,6 +7,7 @@ use models\Usuario;
 use controllers\ControllerProspect;
 
 if(isset($_SESSION['usuario'])){
+
     if(isset($_GET['email'])){
         $email = $_GET['email'];
 
@@ -34,6 +35,9 @@ if(isset($_SESSION['usuario'])){
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="v_listar_prospect.php">Cadastrar Prospects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../controllers/sair.php">Sair</a>
                     </li>
                 </ul>
                 <span class="navbar-text">

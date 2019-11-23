@@ -1,11 +1,11 @@
 
 <?php
 session_start();
+
 require_once('../models/Usuario.php');
 use models\Usuario;
 
 if(isset($_SESSION['usuario'])){
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,6 +24,9 @@ if(isset($_SESSION['usuario'])){
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Prospect/v_listar_prospect.php">Cadastrar Prospects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../controllers/sair.php">Sair</a>
                     </li>
                 </ul>
                 <span class="navbar-text">

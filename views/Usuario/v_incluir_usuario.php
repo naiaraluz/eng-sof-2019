@@ -17,6 +17,9 @@ session_start();
                     <li class="nav-item active">
                         <a class="nav-link" href="../main.php">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../controllers/sair.php">Sair</a>
+                    </li>
                 </ul>
                 <span class="navbar-text">
                     Bem vindo:

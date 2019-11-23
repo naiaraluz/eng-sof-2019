@@ -41,6 +41,7 @@ if (isset($_POST['email'])){
         unset($prospect);
         unset($ctrlProspect);
         header('Location: ../../views/Prospect/v_listar_prospect.php');
+
     }catch(\Exception $e){
         $_SESSION['erroNovoProspect'] = $e->getMessage();
         unset($prospect);

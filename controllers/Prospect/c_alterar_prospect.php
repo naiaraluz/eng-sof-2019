@@ -15,6 +15,16 @@ if(isset($_POST['codigo'])) {
     $facebook = $_POST['facebook'];
     $whatsapp = $_POST['whatsapp'];
 
+    if (strpos($email, '#') !== false) {
+        header('Location: ../../views/Prospect/v_listar_prospect.php');
+        return;
+    }
+    if (strpos($email, '@') === false) {
+        $_SESSION['erroAlteracao'] = 'Email precisa ter "@"';
+        header('Location: ../../views/Prospect/v_alterar_prospect.php?email='.$email);
+        return;
+    }
+
     $prospect = new Prospect();
     $prospect->addProspect($codigo, $nome, $email, $celular, $facebook, $whatsapp);
 
@@ -26,7 +36,7 @@ if(isset($_POST['codigo'])) {
 
     } catch(\Exception $ex) {
         $_SESSION['erroAlteracao'] = $ex->getMessage();
-        header('Location: ../../view/Prospect/v_alterar_prospect.php');
+        header('Location: ../../views/Prospect/v_alterar_prospect.php');
     }
 } else {
     //$_SESSION['erroLogin'] = "Faça o Login para completar a operação!"
