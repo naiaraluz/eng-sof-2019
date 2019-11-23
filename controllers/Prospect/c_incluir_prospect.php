@@ -20,6 +20,17 @@ if (isset($_POST['email'])){
     $facebook = $_POST['facebook'];
     $whatsapp = $_POST['whatsapp'];
 
+    if (strpos($email, '#') !== false) {
+        $_SESSION['erroNovoProspect'] = 'Email não pode conter "#"';
+        header('Location: ../../views/Prospect/v_incluir_prospect.php');
+        return;
+    }
+    if (strpos($email, '@') === false) {
+        $_SESSION['erroNovoProspect'] = 'Email precisa ter "@"';
+        header('Location: ../../views/Prospect/v_incluir_prospect.php');
+        return;
+    }
+
     $prospect = new Prospect();
     $prospect->addProspect(null, $nome, $email, $celular, $facebook, $whatsapp);
 
@@ -36,6 +47,5 @@ if (isset($_POST['email'])){
         unset($ctrlProspect);
         header('Location: ../../views/Prospect/v_incluir_prospect.php');
     }
-
 }
 ?>

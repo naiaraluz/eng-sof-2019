@@ -15,13 +15,7 @@ session_start();
             <div class="collapse navbar-collapse" id="textoNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="../principal.php">Home <span class="sr-only">(Página atual)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cadusuarios/usuarios.php">Cadastrar Usuários</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cadastrar Clientes</a>
+                        <a class="nav-link" href="../main.php">Home <span class="sr-only">(Página atual)</span></a>
                     </li>
                 </ul>
                 <span class="navbar-text">
@@ -32,7 +26,7 @@ session_start();
         </nav>
         </header>
         <div class="container">
-            <form class="form-signin" action="../../controllers/usuario/c_incluir_usuario.php" method="POST">
+            <form class="form-signin" action="../../controllers/Usuario/c_incluir_usuario.php" method="POST">
                 <div>
                     <h5 class="form-signin-heading">Cadastro de Usuários:</h5>
                 </div class="">

@@ -9,12 +9,20 @@ $email = $_POST['email'];
 $login = $_POST['login'];
 $senha = $_POST['senha'];
 
+if (strpos($email, '@') === false) {
+   $_SESSION['erroNovoUsuario'] = 'Email precisa ter "@"';
+   header("Location: ../../views/Usuario/v_incluir_usuario.php");
+   return;
+}
+
 $cUsuario = new ControllerUsuario();
+
 try{
    $cUsuario->salvarUsuario($nome, $email, $login, $senha);
    unset($cUsuario);
     $_SESSION['erroLogin'] = "Faça o Login para entrar no sistema!";
    header("Location: ../../index.php");
+
 }catch(Exception $e){
    $_SESSION['erroNovoUsuario'] = $e->getMessage();
    unset($cUsuario);
