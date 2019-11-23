@@ -26,6 +26,9 @@ if(isset($_SESSION['usuario'])){
                     <li class="nav-item">
                         <a class="nav-link" href="v_listar_prospect.php">Cadastrar Prospects</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../../controllers/sair.php">Sair</a>
+                    </li>
                 </ul>
                 <span class="navbar-text">
                         Bem vindo: <?php $usuario = unserialize($_SESSION['usuario']);
