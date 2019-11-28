@@ -5,6 +5,14 @@ require_once('../../controllers/Prospect/ControllerProspect.php');
 
 use controllers\ControllerProspect;
 use models\Usuario;
+$girafa=0;
+function codigo($x){
+    echo $x;
+    $girafa = $x;
+    header("Location: ../../controllers/Prospect/c_excluir_prospect.php?codigo=".$girafa.'"');
+
+
+}
 
 if(isset($_SESSION['usuario'])){
 ?>
@@ -14,6 +22,9 @@ if(isset($_SESSION['usuario'])){
     <head>
         <title>Bem Vindo ao Sistema</title>
         <link rel="stylesheet" type="text/css" href="../../libs/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <style type="text/css">
             .table-overflow {
                 max-height:600px;
@@ -22,7 +33,30 @@ if(isset($_SESSION['usuario'])){
         </style>
     </head>
     <body>
+            <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Confirmação de Exclusão</h4>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir o prospect?.</p>
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal" >Excluir</button>  
+        </div>
+      </div>
+      </div>
+      
+    </div>
+  </div>
         <header>
+        
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div class="collapse navbar-collapse" id="textoNavbar">
                     <ul class="navbar-nav mr-auto">
@@ -69,8 +103,8 @@ if(isset($_SESSION['usuario'])){
                                     echo '<td>'.$prospect->facebook.'</td>';
                                     echo '<td>'.$prospect->whatsapp.'</td>';
                                     echo '<td width="150"><a href="v_alterar_prospect.php?email='.$prospect->email.'">alterar</a> |
-                                    <a href="../../controllers/Prospect/c_excluir_prospect.php?codigo='.$prospect->codigo.'">excluir</a></td>' ;
-                                echo '</tr>';
+                                    <a data-toggle="modal" data-target="#myModal" href="?codigo='.$prospect->codigo.'">excluir</a></td>' ;
+                                    echo '</tr>';
                             }
                         ?>
                     </tbody>
@@ -80,8 +114,9 @@ if(isset($_SESSION['usuario'])){
                 <a class="btn btn-primary" href="v_incluir_prospect.php">Novo</a>
             </div>
         </div>
-
+               
     </body>
+    
 </html>
 
 <?php
